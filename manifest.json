@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "汇率价格转换器",
+  "version": "1.0.0",
+  "description": "自动识别网页中的价格与货币单位，并在原价后用所选目标货币显示换算结果。",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["https://open.er-api.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "汇率价格转换器",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file:///*"],
+      "js": ["currencies.js", "parser.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "match_about_blank": false
+    }
+  ],
+  "minimum_chrome_version": "102"
+}

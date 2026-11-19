@@ -1,0 +1,32 @@
+/* 页面内换算结果标注样式 */
+.xr-conv {
+  display: inline;
+  margin-left: 3px;
+  padding: 0 3px;
+  border-radius: 3px;
+  background: rgba(11, 122, 75, 0.1);
+  color: #0b7a4b;
+  font-family: inherit;
+  font-size: 0.85em;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  vertical-align: baseline;
+  cursor: default;
+  user-select: none;
+}
+
+.xr-conv:hover {
+  background: rgba(11, 122, 75, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  .xr-conv {
+    background: rgba(72, 199, 142, 0.18);
+    color: #48c78e;
+  }
+
+  .xr-conv:hover {
+    background: rgba(72, 199, 142, 0.28);
+  }
+}

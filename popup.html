@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>汇率价格转换器</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="logo" aria-hidden="true">¥</div>
+      <div class="titles">
+        <h1>汇率价格转换器</h1>
+        <p>网页价格自动换算显示</p>
+      </div>
+      <label class="switch" title="启用/停用">
+        <input id="enabled" type="checkbox">
+        <span class="slider"></span>
+      </label>
+    </header>
+
+    <main class="body">
+      <label class="field" for="target">
+        <span class="field-label">换算为</span>
+        <select id="target"></select>
+      </label>
+
+      <label class="field" for="decimals">
+        <span class="field-label">小数位</span>
+        <select id="decimals">
+          <option value="0">0 位</option>
+          <option value="1">1 位</option>
+          <option value="2">2 位</option>
+          <option value="3">3 位</option>
+          <option value="4">4 位</option>
+        </select>
+      </label>
+
+      <label class="field field-inline" for="skipSame">
+        <span class="field-label">原货币与目标货币相同时不显示</span>
+        <input id="skipSame" type="checkbox">
+      </label>
+
+      <section class="rate-card">
+        <div class="rate-line" id="rateLine">正在读取汇率…</div>
+        <div class="rate-line rate-detail" id="rateDetail"></div>
+      </section>
+
+      <div class="actions">
+        <button id="refreshRates" type="button">刷新汇率</button>
+        <button id="rescan" type="button" class="primary">重新扫描</button>
+      </div>
+
+      <p class="page-status" id="pageStatus"></p>
+      <p class="note">汇率数据来自 open.er-api.com，每 6 小时自动更新。</p>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script src="currencies.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
