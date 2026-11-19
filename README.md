@@ -44,6 +44,7 @@ popup.html/css/js  工具栏弹窗
 demo/index.html    本地演示页（双击打开时需开启扩展的「允许访问文件网址」）
 tests/             parser.js 单元测试
 icons/             扩展图标
+LICENSE            MIT 开源协议
 ```
 
 ## 开发与测试
@@ -66,3 +67,7 @@ node tests/parser.test.js
 - 扩展不收集、不上传任何浏览记录或页面内容。
 - 仅向 `open.er-api.com` 请求公开汇率数据。
 - 设置保存在浏览器同步存储中，汇率缓存在本地存储中。
+
+## 许可证
+
+本项目基于 [MIT License](LICENSE) 开源，Copyright (c) 2026 GlibWild。
