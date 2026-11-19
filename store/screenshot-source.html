@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>商店截图源</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #dfe6e2; }
+    body { font-family: "Microsoft YaHei", "Segoe UI", sans-serif; }
+
+    #stage {
+      position: relative;
+      width: 1280px;
+      height: 800px;
+      overflow: hidden;
+      background: #eef2ef;
+      color: #1f2937;
+    }
+
+    .topbar {
+      height: 52px;
+      background: #dbe4df;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 22px;
+      border-bottom: 1px solid #cbd7d1;
+    }
+
+    .dots { display: flex; gap: 7px; }
+    .dot { width: 11px; height: 11px; border-radius: 50%; }
+    .dot.red { background: #ff605c; }
+    .dot.yellow { background: #ffbd44; }
+    .dot.green { background: #00ca4e; }
+
+    .address {
+      flex: 1;
+      max-width: 620px;
+      margin: 0 auto;
+      height: 30px;
+      border-radius: 15px;
+      background: #fff;
+      border: 1px solid #c6d3cc;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      font-size: 12.5px;
+      color: #4b5563;
+      gap: 8px;
+    }
+
+    .lock { width: 8px; height: 10px; border: 1.5px solid #6b7280; border-radius: 2px; position: relative; }
+    .lock::before { content: ""; position: absolute; width: 6px; height: 5px; border: 1.5px solid #6b7280; border-bottom: 0; border-radius: 4px 4px 0 0; left: 0; top: -5px; }
+
+    .page {
+      padding: 26px 40px 32px;
+      height: 748px;
+    }
+
+    .crumb { font-size: 12px; color: #6b7280; margin-bottom: 16px; }
+
+    .layout { display: flex; gap: 28px; align-items: flex-start; }
+
+    .product {
+      width: 636px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      gap: 22px;
+      box-shadow: 0 14px 30px rgba(15, 60, 40, 0.08);
+    }
+
+    .hero {
+      width: 238px;
+      height: 300px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #31363f 0%, #5b6472 55%, #8f9aa8 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 18px;
+      flex: none;
+    }
+
+    .hero .tag { font-size: 11px; letter-spacing: 2px; color: #cbd5e1; margin-bottom: 6px; }
+    .hero .name { font-size: 21px; font-weight: 700; line-height: 1.3; }
+
+    .info { flex: 1; min-width: 0; }
+    .info h1 { margin: 2px 0 4px; font-size: 25px; line-height: 1.35; }
+    .sub { color: #6b7280; font-size: 12.5px; margin: 0 0 14px; }
+    .stars { color: #f59e0b; font-size: 13px; letter-spacing: 1px; }
+    .stars span { color: #6b7280; margin-left: 6px; letter-spacing: 0; }
+
+    .price-row { display: flex; align-items: baseline; gap: 10px; margin: 18px 0 2px; flex-wrap: wrap; }
+    .price { font-size: 38px; font-weight: 700; letter-spacing: -0.5px; }
+
+    .xr-conv {
+      display: inline;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(11, 122, 75, 0.1);
+      color: #0b7a4b;
+      font-size: 17px;
+      font-weight: 700;
+      white-space: nowrap;
+      vertical-align: baseline;
+    }
+
+    .price-note { font-size: 12px; color: #6b7280; margin: 4px 0 16px; }
+    .price-note .xr-conv { font-size: 13px; padding: 1px 5px; }
+
+    .bullets { margin: 0 0 18px; padding: 0; list-style: none; font-size: 12.5px; color: #374151; line-height: 2; }
+    .bullets li::before { content: "✓"; color: #0b7a4b; font-weight: 700; margin-right: 8px; }
+
+    .buttons { display: flex; gap: 10px; }
+    .btn { border-radius: 8px; padding: 10px 20px; font-size: 13.5px; font-weight: 600; border: 1px solid #d1d5db; background: #fff; color: #111827; }
+    .btn.primary { background: #0b7a4b; border-color: #0b7a4b; color: #fff; }
+
+    .side {
+      flex: 1;
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 14px 30px rgba(15, 60, 40, 0.08);
+    }
+
+    .side h2 { margin: 0 0 14px; font-size: 16px; }
+    .item { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid #f0f3f1; }
+    .item:last-child { border-bottom: 0; }
+    .thumb { width: 46px; height: 46px; border-radius: 9px; background: linear-gradient(145deg, #e5e7eb, #cbd5e1); flex: none; }
+    .item .meta { flex: 1; min-width: 0; }
+    .item .title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+    .item .row { font-size: 12.5px; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+    .item .amount { font-weight: 700; }
+    .item .xr-conv { font-size: 11.5px; padding: 1px 4px; }
+
+    .popup {
+      position: absolute;
+      right: 42px;
+      top: 468px;
+      width: 340px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 24px 60px rgba(9, 48, 32, 0.26);
+      overflow: hidden;
+      border: 1px solid #e2e8e5;
+    }
+
+    .popup-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid #e5e7eb; }
+    .popup-logo { width: 32px; height: 32px; border-radius: 50%; background: #0b7a4b; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; }
+    .popup-titles { flex: 1; }
+    .popup-titles h3 { margin: 0; font-size: 14px; }
+    .popup-titles p { margin: 2px 0 0; font-size: 11px; color: #6b7280; }
+    .toggle { width: 40px; height: 22px; border-radius: 11px; background: #0b7a4b; position: relative; flex: none; }
+    .toggle::after { content: ""; position: absolute; width: 16px; height: 16px; border-radius: 50%; background: #fff; right: 3px; top: 3px; }
+
+    .popup-body { padding: 12px 16px 14px; }
+    .field { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; gap: 10px; }
+    .field-label { font-size: 12.5px; color: #6b7280; }
+    .select { width: 168px; padding: 7px 9px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 13px; color: #111827; background: #fff; display: flex; justify-content: space-between; }
+    .select::after { content: "▾"; color: #6b7280; font-size: 10px; }
+    .check { width: 16px; height: 16px; border-radius: 3px; background: #0b7a4b; color: #fff; font-size: 11px; display: flex; align-items: center; justify-content: center; flex: none; }
+
+    .rate-card { margin: 10px 0 4px; padding: 9px 11px; border-radius: 8px; background: #f6f8f7; border: 1px solid #e5e7eb; }
+    .rate-card .line1 { font-size: 12px; }
+    .rate-card .line2 { font-size: 11px; color: #6b7280; margin-top: 2px; }
+
+    .popup-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .popup-actions .pbtn { flex: 1; text-align: center; padding: 8px 10px; border-radius: 7px; border: 1px solid #e5e7eb; font-size: 12.5px; }
+    .popup-actions .pbtn.primary { background: #0b7a4b; border-color: #0b7a4b; color: #fff; font-weight: 600; }
+
+    .footnote { position: absolute; left: 40px; bottom: 18px; font-size: 11px; color: #7b8a82; }
+  </style>
+</head>
+<body>
+  <div id="stage">
+    <div class="topbar">
+      <div class="dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <div class="address"><span class="lock"></span>shop.example.com/iphone-15-pro</div>
+    </div>
+
+    <div class="page">
+      <div class="crumb">首页 / 手机数码 / iPhone 15 Pro</div>
+
+      <div class="layout">
+        <div class="product">
+          <div class="hero">
+            <div class="tag">TITANIUM</div>
+            <div class="name">iPhone 15 Pro</div>
+          </div>
+          <div class="info">
+            <h1>iPhone 15 Pro 256GB</h1>
+            <p class="sub">原色钛金属 · 全网通 · 官方正品</p>
+            <div class="stars">★★★★★<span>4.9 分 · 2,318 条评价</span></div>
+
+            <div class="price-row">
+              <span class="price">$999.00</span>
+              <span class="xr-conv">≈ ¥7,112.88</span>
+            </div>
+            <p class="price-note">原价 $1,099.00 <span class="xr-conv">≈ ¥7,824.88</span></p>
+
+            <ul class="bullets">
+              <li>A17 Pro 芯片，性能与能效全面升级</li>
+              <li>钛金属边框，更轻更坚固</li>
+              <li>4800 万像素主摄，支持 4K60 视频</li>
+            </ul>
+
+            <div class="buttons">
+              <button class="btn primary">加入购物车</button>
+              <button class="btn">收藏商品</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="side">
+          <h2>今日推荐</h2>
+          <div class="item">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title">AirPods Pro 2</div>
+              <div class="row"><span class="amount">$249.00</span><span class="xr-conv">≈ ¥1,772.88</span></div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title">Apple Watch S9</div>
+              <div class="row"><span class="amount">$399.00</span><span class="xr-conv">≈ ¥2,840.88</span></div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title">iPad Air 11 英寸</div>
+              <div class="row"><span class="amount">$599.00</span><span class="xr-conv">≈ ¥4,264.88</span></div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title">MacBook Air M3</div>
+              <div class="row"><span class="amount">$1,099.00</span><span class="xr-conv">≈ ¥7,824.88</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup">
+      <div class="popup-header">
+        <div class="popup-logo">¥</div>
+        <div class="popup-titles">
+          <h3>汇率价格转换器</h3>
+          <p>网页价格自动换算显示</p>
+        </div>
+        <div class="toggle"></div>
+      </div>
+      <div class="popup-body">
+        <div class="field">
+          <span class="field-label">换算为</span>
+          <span class="select">人民币（CNY）</span>
+        </div>
+        <div class="field">
+          <span class="field-label">小数位</span>
+          <span class="select">2 位</span>
+        </div>
+        <div class="field">
+          <span class="field-label">原货币与目标货币相同时不显示</span>
+          <span class="check">✓</span>
+        </div>
+        <div class="rate-card">
+          <div class="line1">汇率已更新：2026/11/19 14:00:00</div>
+          <div class="line2">1 USD ≈ 7.12 人民币（CNY）</div>
+        </div>
+        <div class="popup-actions">
+          <span class="pbtn">刷新汇率</span>
+          <span class="pbtn primary">重新扫描</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">汇率数据来自 open.er-api.com · 仅在本机完成价格识别与换算</div>
+  </div>
+</body>
+</html>

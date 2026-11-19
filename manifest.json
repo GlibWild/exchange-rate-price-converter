@@ -3,6 +3,8 @@
   "name": "汇率价格转换器",
   "version": "1.0.0",
   "description": "自动识别网页中的价格与货币单位，并在原价后用所选目标货币显示换算结果。",
+  "author": "GlibWild",
+  "homepage_url": "https://github.com/GlibWild/exchange-rate-price-converter",
   "permissions": ["storage", "activeTab"],
   "host_permissions": ["https://open.er-api.com/*"],
   "background": {

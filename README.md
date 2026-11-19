@@ -44,6 +44,9 @@ popup.html/css/js  工具栏弹窗
 demo/index.html    本地演示页（双击打开时需开启扩展的「允许访问文件网址」）
 tests/             parser.js 单元测试
 icons/             扩展图标
+scripts/           构建打包与商店素材生成脚本
+store/             商店文案、截图、图标与促销图
+PRIVACY.md         隐私政策
 LICENSE            MIT 开源协议
 ```
 
@@ -54,6 +57,31 @@ node tests/parser.test.js
 ```
 
 修改 `parser.js` 的价格识别规则后，请同步补充 `tests/parser.test.js` 中的用例。
+
+## 构建安装包
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/build.ps1
+```
+
+输出：`dist/exchange-rate-price-converter-1.0.0.zip`（仅包含扩展运行所需文件，根目录为 `manifest.json`）。
+
+重新生成商店图标与促销图：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/make-store-assets.ps1
+```
+
+## 发布到 Edge 加载项商店
+
+Microsoft Edge 加载项商店目前不支持通过公开 API 自动提交，需要在 Partner Center 网页端手工上传：
+
+1. 打开 [Partner Center](https://partner.microsoft.com/dashboard/microsoftedge/overview) 并登录 Microsoft 账号（个人开发者注册免费）。
+2. 创建新扩展，上传 `dist/exchange-rate-price-converter-1.0.0.zip`。
+3. 按 `store/listing.md` 填写商店文案，上传 `store/logo-300.png`、`store/screenshot-1280x800.png` 等素材。
+4. 填写审核备注并提交认证，通常需要 1–7 个工作日。
+
+商店文案、审核备注、隐私政策链接与发布检查清单见 [`store/listing.md`](store/listing.md)。
 
 ## 已知限制
 
@@ -67,6 +95,8 @@ node tests/parser.test.js
 - 扩展不收集、不上传任何浏览记录或页面内容。
 - 仅向 `open.er-api.com` 请求公开汇率数据。
 - 设置保存在浏览器同步存储中，汇率缓存在本地存储中。
+
+完整说明见 [PRIVACY.md](PRIVACY.md)。
 
 ## 许可证
 
